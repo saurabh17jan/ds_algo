@@ -97,6 +97,20 @@ class ArrayQueue():
 
 
     def _resize(self,cap):
+        """
+        Resize to a new list of capacity >= len(self)
+        """
+
+        old = self._data                                                            # Keep Track of existing list
+        self._data = [None]*cap                                                     # allocating new list with new capacity
+        walk = self._front
+        for k in range(self._size):                                                 # only consider existing elements
+            self._data[k] = old[walk]                                               # intentionally shifting the indices
+            walk = (1 + walk) % len(old)                                            # use old size as modulus
+
+        self._front = 0                                                             # front has been realigned
+
+
 
 
 
@@ -104,5 +118,36 @@ class ArrayQueue():
 
 
 if __name__ == '__main__':
+
+    q = ArrayQueue()
+    q.enqueue(1)
+    q.enqueue(2)
+    q.enqueue(3)
+    q.enqueue(4)
+    q.enqueue(5)
+    q.enqueue(6)
+    q.enqueue(7)
+    q.enqueue(8)
+    q.enqueue(9)
+
+    print "lenght is : " + str(len(q))
+    print q.first()
+    print q.dequeue()
+    print q.first()
+
+    q.enqueue(10)
+    q.enqueue(2)
+    q.enqueue(3)
+    q.enqueue(4)
+
+    print "lenght is : " + str(len(q))
+    print  q.first()
+    print  q.dequeue()
+    print  q.dequeue()
+    print  q.dequeue()
+    print  q.dequeue()
+
+
+
 
 
